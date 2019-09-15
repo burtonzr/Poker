@@ -1,0 +1,117 @@
+package com.example.poker;
+
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.graphics.Bitmap;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.Animator;
+import android.widget.ImageView;
+
+public class PokerActivity extends AppCompatActivity {
+    //Bitmap image;
+
+    //CardView cardView;
+
+    private boolean isCard1Pressed = false;
+    private boolean isCard2Pressed = false;
+    private boolean isCard3Pressed = false;
+    private boolean isCard4Pressed = false;
+    private boolean isCard5Pressed = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_poker);
+
+        final ImageView card1 = findViewById(R.id.card1);
+        final ImageView card2 = findViewById(R.id.card2);
+        final ImageView card3 = findViewById(R.id.card3);
+        final ImageView card4 = findViewById(R.id.card4);
+        final ImageView card5 = findViewById(R.id.card5);
+
+        final View.OnClickListener cardListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()) {
+                    case R.id.card1:
+                        final ObjectAnimator oa1 = ObjectAnimator.ofFloat(card1, "scaleX", 1f, 0f);
+                        final ObjectAnimator oa2 = ObjectAnimator.ofFloat(card1, "scaleX", 0f, 1f);
+                        oa1.setInterpolator(new DecelerateInterpolator());
+                        oa2.setInterpolator(new AccelerateDecelerateInterpolator());
+                        oa1.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                card1.setImageResource(R.drawable.ten_hearts);
+                                oa2.start();
+                            }
+                        });
+                        oa1.start();
+                        /*
+                        if(isCard1Pressed) {
+                            card1.setImageResource(R.drawable.card_bg);
+                            isCard1Pressed = false;
+                        } else {
+                            card1.setImageResource(R.drawable.ten_hearts);
+                            isCard1Pressed = true;
+                        }
+                        */
+                        break;
+                    case R.id.card2:
+                        if(isCard2Pressed) {
+                            card2.setImageResource(R.drawable.card_bg);
+                            isCard2Pressed = false;
+                        } else {
+                            card2.setImageResource(R.drawable.eight_diamonds);
+                            isCard2Pressed = true;
+                        }
+                        break;
+                    case R.id.card3:
+                        if(isCard3Pressed) {
+                            card3.setImageResource(R.drawable.card_bg);
+                            isCard3Pressed = false;
+                        } else {
+                            card3.setImageResource(R.drawable.queen_hearts);
+                            isCard3Pressed = true;
+                        }
+                        break;
+                    case R.id.card4:
+                        if(isCard4Pressed) {
+                            card4.setImageResource(R.drawable.card_bg);
+                            isCard4Pressed = false;
+                        } else {
+                            card4.setImageResource(R.drawable.ace_diamonds);
+                            isCard4Pressed = true;
+                        }
+                        break;
+                    case R.id.card5:
+                        if(isCard5Pressed) {
+                            card5.setImageResource(R.drawable.card_bg);
+                            isCard5Pressed = false;
+                        } else {
+                            card5.setImageResource(R.drawable.ten_spades);
+                            isCard5Pressed = true;
+                        }
+                        break;
+                }
+            }
+        };
+        card1.setOnClickListener(cardListener);
+        card2.setOnClickListener(cardListener);
+        card3.setOnClickListener(cardListener);
+        card4.setOnClickListener(cardListener);
+        card5.setOnClickListener(cardListener);
+
+        /*
+        if(savedInstanceState != null) {
+            image = (Bitmap) savedInstanceState.getParcelable("BitmapImage");
+        }
+        */
+    }
+}
